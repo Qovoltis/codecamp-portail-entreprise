@@ -1,4 +1,10 @@
 # custom gitignore
+.idea/
+.idea/*
+files
+files/*
+logs
+logs/*
 
 # behind is github gitignore for python projects
 # Byte-compiled / optimized / DLL files
