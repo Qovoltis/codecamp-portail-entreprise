@@ -2,10 +2,13 @@ import os
 
 
 class ApiConfig(object):
+    FLASK_ENV = os.environ.get('FLASK_ENV', 'development')
     DEBUG = bool(os.environ.get('DEBUG', True))
     TESTING = bool(os.environ.get('TESTING', True))
-    LOG_FILEPATH = os.environ.get('LOG_FILEPATH', '/logs/')
-    DATA_FILEPATH = os.environ.get('DATA_FILEPATH', '../files/')
+    RBAC_USE_WHITE = True
+    USER_TOKEN_VALIDITY_SPAN = int(os.environ.get('USER_TOKEN_VALIDITY_SPAN', 3600))
+    LOG_FILEPATH = os.environ.get('LOG_FILEPATH', './logs/')
+    DATA_FILEPATH = os.environ.get('DATA_FILEPATH', './files/')
     DB_CURSORCLASS = 'DictCursor'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {'encoding': 'utf8'}

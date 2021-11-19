@@ -1,15 +1,14 @@
 import json
 from functools import wraps
-
 from flask import request, g
 from flask_httpauth import HTTPTokenAuth
-
 from common.helper import get_error_stacktrace
 
 
 class CustomHTTPTokenAuth(HTTPTokenAuth):
     """this class is a simple wrapper of HTTPTokenAuth which redefines only login_required decorator
-    in order to log user activities"""
+    in order to log user activities
+    """
 
     def login_required(self, f):
         @wraps(f)
@@ -44,7 +43,7 @@ class CustomHTTPTokenAuth(HTTPTokenAuth):
 
                 g.user_logger.file_logger.error(
                     f"Exception while executing {f.__module__}.{f.__name__} "
-                    f"with args {serialized_args} and kwargs {serialized_kwargs} : {get_error_stacktrace(full_stacktrace = False)}")
+                    f"with args {serialized_args} and kwargs {serialized_kwargs} : {get_error_stacktrace()}")
                 raise err
 
         return decorated

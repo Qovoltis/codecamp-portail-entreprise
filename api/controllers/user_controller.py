@@ -1,33 +1,41 @@
 from logging import Logger
 from typing import Dict
 
-from flask import Blueprint, g, jsonify, request, Response, current_app, url_for, send_file
-# from common.helper import standard_json_response, has_mail_pattern, random_key, file_extension
-# from ..auth import rbac
-# from ..auth.auth import basic_auth, token_auth
-#
-# from API.helper.user_info import get_user_info as helper_get_user_info, INFOS, TRADING_KEY, SUBSCRIPTIONS, BINANCE
-# from ..db import with_db_session
+from flask import Blueprint, g, current_app
 
+from api.auth import basic_auth, token_auth
+from common.db_model import rbac
+from common.helper import standard_json_response
+from api.helper.user_info import get_user_info as helper_get_user_info
 
 user_api = Blueprint('user', __name__)
 
 
-def get_user_file_logger() -> Logger:
-    """Utility method to get current (this request) user logger"""
-    return g.user_logger.file_logger
-
-
 @user_api.route('/login', methods=['POST'])
-@with_db_session
 @basic_auth.login_required
+@rbac.allow(['anonymous'], methods=['POST'], endpoint='user.login')
 def login():
     """Returns if basic authentication is successful the current Bearer token for authenticating the user"""
-    get_user_file_logger().debug("call on user.get_token")
-    curr_user = g.current_user
-    token = current_app.app_auth.generate_token(curr_user.id, curr_user.reference)
-    # print(token)
+    g.user_logger.file_logger.debug("call on user.login")
+    token = current_app.token_manager.generate_token(g.current_user.id, g.current_user.email)
     return standard_json_response(http_status_code=200, data={'token': token})
+
+
+@user_api.route('/info', methods=['GET'])
+@user_api.route('/info/<groups>', methods=['GET'])
+@rbac.allow(['employee', 'administrator'], methods=['GET'], endpoint='user.get_user_info')
+@token_auth.login_required
+def get_user_info(groups: [str, None] = None):
+    """
+    :param groups a string of values & separated that can be specified to return only what you need,
+    Ex : Ex : minimal&subscriptions
+    :returns user info dictionary
+    see helper/user_info for more details
+    """
+    if groups is not None:
+        groups = groups.split('&')
+    user_info = helper_get_user_info(g.current_user, groups)
+    return standard_json_response(http_status_code=200, data=user_info)
 
 #
 # @user_api.route('/logout', methods=['POST'])

@@ -1,0 +1,35 @@
+<style>
+td {
+    border: 1px solid #333;
+}
+
+thead,
+tfoot {
+    background-color: #333;
+    color: #fff;
+}
+</style>
+<h1>Liste des routes HTTP disponibles</h1>
+<table style="">
+    <thead>
+    <tr>
+        <th>URL</th>
+        <th>endpoint</th>
+        <th>methods</th>
+        <th>arguments</th>
+        <th>URL complete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for route in http_routes %}
+    <tr>
+        <td>{{route.base_url}}</td>
+        <td>{{route.endpoint}}</td>
+        <td>{{route.methods}}</td>
+        <td>{{route.arguments}}</td>
+        <td>{{route.url}}</td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>

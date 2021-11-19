@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API CodeCamp portail entreprise Qovoltis</title>
+</head>
+<body>
+L'API CodeCamp portail entreprise Qovoltis est bien lancée avec la configuration <i>{{config_key}}</i>
+    {% if http_routes %}
+        <br>
+        {% include "liste_http_route.html" ignore missing with context %}
+    {% endif %}
+
+</body>
+</html>
