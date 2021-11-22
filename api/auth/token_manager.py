@@ -1,17 +1,20 @@
-from typing import Dict
+from typing import Dict, Set
 from datetime import datetime, timedelta
 import jwt
 
 
 class TokenManager:
     """class for handling JsonWebTokens generation, caching, encoding and decoding"""
-    _buffered_tokens: Dict
     _token_validity_span: timedelta
+    _buffered_tokens: Dict
+    _invalidated_tokens: Set
 
     def __init__(self, token_validity_span: int = 3600):
         self._token_validity_span = timedelta(seconds=token_validity_span)
         # this Dict registers generated tokens to allow returning the same token for a given amount of time
         self._buffered_tokens = {}
+        # this Set registers invalidated tokens to prevent their reuse, making logout effective
+        self._invalidated_tokens = set()
 
     def generate_token(self, user_id: int, user_email: str) -> str:
         """returns a new token or a cached one if still valid"""
@@ -38,6 +41,8 @@ class TokenManager:
 
     def decode_token(self, token: str) -> Dict:
         """decode a token and check its validity, returned Dict contains decoded data if token is valid"""
+        if token in self._invalidated_tokens:
+            return {'error': 'Token expired, please login again.'}
         try:
             payload = jwt.decode(token, 'SpaceArt', "HS256")
             return {
@@ -45,21 +50,17 @@ class TokenManager:
                 'user_email': payload['ref']
             }
         except jwt.ExpiredSignatureError:
-            return {
-                'error': 'Token expired, please login again.'
-            }
+            return {'error': 'Token expired, please login again.'}
         except jwt.InvalidTokenError:
-            return {
-                'error': 'Invalid token, please login again to get a valid token.'
-            }
+            return {'error': 'Invalid token, please login again to get a valid token.'}
         except Exception as e:
-            return {
-                'error': f'Other exception while decoding token: {str(e)}'
-            }
+            return {'error': f'Other exception while decoding token: {str(e)}'}
 
     def invalidate_user_token(self, user_id: int):
         """invalidate user cached token if any"""
         if user_id in self._buffered_tokens.keys():
-            self._buffered_tokens.pop(user_id)
+            self._invalidated_tokens.add(self._buffered_tokens.pop(user_id))
+
+
 
 

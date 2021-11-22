@@ -42,9 +42,10 @@ def __update_user_info_for_minimal(user_info: Dict, user: User):
 
 def __update_user_info_for_info(user_info: Dict, user: User):
     """add the info group to userInfo dict :
-    example {"firstname": "Simon", "lastname": "THUILLIER", "organization": "Qovoltis"}"""
+    example {"firstname": "Simon", "lastname": "THUILLIER", "phone": "+33612345678", "organization": "Qovoltis"}"""
     user_info['info'] = {
         "firstname": user.firstname,
         "lastname": user.lastname,
+        "phone": user.phone,
         "organization": user.organization.name
     }

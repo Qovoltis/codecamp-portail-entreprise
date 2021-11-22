@@ -77,6 +77,7 @@ class User(db.Model, UserMixin):
     password: str = db.Column(db.String, nullable=False)
     firstname: str = db.Column(db.String, nullable=False)
     lastname: str = db.Column(db.String, nullable=False)
+    phone: str = db.Column(db.String, nullable=False)
     organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     organization: Organization = db.relationship(Organization)
     roles = db.relationship(Role, secondary=user_role)
@@ -109,6 +110,7 @@ class User(db.Model, UserMixin):
         anonymous_user.email = "anonymous"
         anonymous_user.firstname = "NA"
         anonymous_user.lastname = "NA"
+        anonymous_user.phone = "NA"
         anonymous_user.roles = [Role.create_anonymous()]
         return anonymous_user
 

@@ -12,6 +12,7 @@ from .helper import RequestAuthAnalyzer
 from .user_logger import UserLogger
 from .custom_http_token_auth import CustomHTTPTokenAuth
 
+# dictionary storing several http response codes and messages for authentication/rbac fails use cases
 __FAIL_RESPONSES = {
     "INVALID_BASIC_AUTH": {"http_status_code": 401, "message": "Wrong login and/or password."},
     "INVALID_TOKEN_AUTH": {"http_status_code": 401, "message": "Wrong or expired bearer token. Please login again."},
@@ -33,7 +34,8 @@ def __basic_auth_error_handler():
 @basic_auth.verify_password
 def __basic_auth_verify_password(email, password) -> bool:
     """
-    function called by HTTPBasicAuth manager with email/password already decrypted from b64
+    returns a boolean indicating if provided basic auth login/password is valid.
+    If true also set g.current_user and user_logger for further use in controllers
     :param email:
     :param password:
     :return bool:
@@ -65,6 +67,8 @@ def __token_auth_error_handler():
 
 @token_auth.verify_token
 def __token_auth_verify_token(token: str) -> bool:
+    """returns a boolean indicating if provided bearer token token is a valid JWT token for a valid user.
+    If true also set g.current_user and user_logger for further use in controllers"""
 
     # since rbac is called before if user is already set we just return it
     if g.get('current_user', None):
@@ -99,7 +103,6 @@ def __token_auth_verify_token(token: str) -> bool:
 
 def __rbac_user_loader():
     """rbac also needs a function to retrieve its user and check its roles
-    we use the fact that either by Basic or Token authentication user is referenced in g (global) flask object
     """
 
     __FAIL_RESPONSES["INVALID_RIGHTS"] = \
