@@ -90,8 +90,8 @@ def __token_auth_verify_token(token: str) -> bool:
     if not m_user:
         return False
 
-    print(m_user)
-    print(m_user.get_roles())
+    # print(m_user)
+    # print(m_user.get_roles())
 
     # if test is ok we update current_user and user_logger
     g.current_user = m_user

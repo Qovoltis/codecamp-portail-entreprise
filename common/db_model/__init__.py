@@ -28,10 +28,10 @@ logging.getLogger('sqlalchemy.engine').addHandler(log_handler)
 logging.getLogger('sqlalchemy.orm').addHandler(log_handler)
 
 log_handler.setLevel(logging.INFO)
-logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
-logging.getLogger('sqlalchemy.orm').setLevel(logging.WARNING)
+logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+logging.getLogger('sqlalchemy.orm').setLevel(logging.DEBUG)
 
 # to avoid sqlalchemy back-reference problems all model scripts must be imported
-from . import user
+from . import user, address, charge_point, whitelist
 
 

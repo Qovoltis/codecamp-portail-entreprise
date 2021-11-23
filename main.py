@@ -5,7 +5,7 @@ import eventlet
 import click
 from dotenv import load_dotenv
 # project imports
-from api.launcher import create_app
+from api.application import create_app
 
 
 @click.command()

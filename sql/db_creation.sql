@@ -192,9 +192,27 @@ FOREIGN KEY(user_id) REFERENCES user(id),
 UNIQUE(whitelist_id, user_id)
 );
 
+CREATE TABLE whitelist_charge_point(
+whitelist_id INTEGER NOT NULL,
+charge_point_id INTEGER NOT NULL,
+created_at TEXT NOT NULL,
+FOREIGN KEY(whitelist_id) REFERENCES whitelist(id),
+FOREIGN KEY(charge_point_id) REFERENCES charge_point(id),
+UNIQUE(whitelist_id, charge_point_id)
+);
+
 -- data insertion (whitelist)
 INSERT INTO whitelist(label, organization_id, paid_by_organization, created_at, expires_at) VALUES
-('Premiere whitelist', 1, 1, '2021-11-22', null);
+('Premiere whitelist', 1, 1, '2021-11-22', null),
+('whitelist test', 1, 0, '2021-11-23', null);
 
 INSERT INTO whitelist_user(whitelist_id, user_id, created_at, expires_at) VALUES
-(1, 1, '2021-11-22', '2021-12-03');
+(1, 1, '2021-11-22', '2021-12-03'),
+(2, 1, '2021-11-23', '2021-11-24');
+
+INSERT INTO whitelist_charge_point(whitelist_id, charge_point_id, created_at) VALUES
+(1, 1, '2021-11-22'),
+(1, 2, '2021-11-22'),
+(1, 3, '2021-11-22'),
+(1, 4, '2021-11-22'),
+(2, 1, '2021-11-23');

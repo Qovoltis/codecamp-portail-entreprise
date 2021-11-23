@@ -3,7 +3,7 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy import and_, desc
 from flask_rbac import RoleMixin, UserMixin
 from datetime import datetime, timedelta
-from typing import List, Optional
+from typing import List, Optional, Dict
 from . import db, rbac
 
 
@@ -98,7 +98,7 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def get_by_email(email: str) -> Optional[User]:
-        return User.query.\
+        return User.query. \
             options(joinedload(User.organization, innerjoin=False)). \
             options(joinedload(User.roles, innerjoin=False)). \
             filter_by(email=email).one_or_none()
@@ -113,4 +113,72 @@ class User(db.Model, UserMixin):
         anonymous_user.phone = "NA"
         anonymous_user.roles = [Role.create_anonymous()]
         return anonymous_user
+
+    def to_list_dict(self) -> Dict:
+        """returns a dictionary of this user adapted for tables"""
+
+        return {
+            "email": self.email,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "phone": self.phone,
+            "organization": self.organization.name,
+            "roles": list(map(lambda x: x.name, self.roles))
+        }
+
+    @staticmethod
+    def _get_filter_condition(_filter: Optional[Dict] = None):
+        condition = and_(True, True)
+        _filter = _filter or {}
+
+        for key, value in _filter.items():
+            if key == 'organization_id':
+                condition = and_(condition, User.organization_id == value)
+            elif key == 'role':
+                condition = and_(condition, Role.name == value)
+            elif key == 'email':
+                condition = and_(condition, User.email.ilike(f"%{value.strip()}%"))
+            elif key == 'firstname':
+                condition = and_(condition, User.firstname.ilike(f"%{value.strip()}%"))
+            elif key == 'lastname':
+                condition = and_(condition, User.lastname.ilike(f"%{value.strip()}%"))
+
+        return condition
+
+    @staticmethod
+    def get_total_for_list(_filter: Optional[Dict] = None) -> int:
+        """returns total number of users which match given filter conditions"""
+        condition = User._get_filter_condition(_filter)
+        return User.query.join(User.roles). \
+                   filter(condition). \
+                   count() or 0
+
+    @staticmethod
+    def get_all_for_list(limit: int = 10,
+                         offset: int = 0,
+                         sort: str = 'email',
+                         order: str = 'asc',
+                         _filter: Optional[Dict] = None) -> list:
+        """special request adapted for table queries"""
+        condition = User._get_filter_condition(_filter)
+
+        query = User.query.join(User.roles).options(joinedload(User.organization)).filter(condition)
+
+        if sort == 'firstname':
+            if order.lower() == 'asc':
+                query = query.order_by(User.firstname.asc())
+            else:
+                query = query.order_by(User.firstname.desc())
+        elif sort == 'lastname':
+            if order.lower() == 'asc':
+                query = query.order_by(User.lastname.asc())
+            else:
+                query = query.order_by(User.lastname.desc())
+        else:
+            if order.lower() == 'asc':
+                query = query.order_by(User.email.asc())
+            else:
+                query = query.order_by(User.email.desc())
+
+        return query.limit(limit).offset(offset).all() or list()
 

@@ -24,9 +24,13 @@ def create_app():
     db.init_app(app)
     app.token_manager = TokenManager(config.USER_TOKEN_VALIDITY_SPAN)
 
-    # register blueprints with API
+    # register blueprints
     from api.controllers.user_controller import user_api
     app.register_blueprint(user_api, url_prefix='/api/user')
+    from api.controllers.employee_controller import employee_api
+    app.register_blueprint(employee_api, url_prefix='/api/employee')
+    from api.controllers.administrator_controller import administrator_api
+    app.register_blueprint(administrator_api, url_prefix='/api/administrator')
 
     @app.errorhandler(werkzeug.exceptions.InternalServerError)
     def internal_server_error_handler(e):

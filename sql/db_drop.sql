@@ -1,5 +1,6 @@
 -- this scripts drop all tables from database allowing for further recreation and reinitialization
 
+DROP TABLE IF EXISTS whitelist_charge_point;
 DROP TABLE IF EXISTS whitelist_user;
 DROP TABLE IF EXISTS whitelist;
 
