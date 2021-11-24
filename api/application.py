@@ -31,6 +31,8 @@ def create_app():
     app.register_blueprint(employee_api, url_prefix='/api/employee')
     from api.controllers.administrator_controller import administrator_api
     app.register_blueprint(administrator_api, url_prefix='/api/administrator')
+    from api.controllers.whitelist_controller import whitelist_api
+    app.register_blueprint(whitelist_api, url_prefix='/api/whitelist')
 
     @app.errorhandler(werkzeug.exceptions.InternalServerError)
     def internal_server_error_handler(e):

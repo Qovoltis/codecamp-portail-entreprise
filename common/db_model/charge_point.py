@@ -1,11 +1,11 @@
 from __future__ import annotations
 from sqlalchemy.orm import joinedload
-from sqlalchemy import and_, desc
+from sqlalchemy import and_, desc, not_
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict
 from . import db
 from common.db_model.user import Organization
-from common.db_model.address import Address
+from common.db_model.address import Address, ZipCode, City
 
 
 class ChargePointStatus(db.Model):

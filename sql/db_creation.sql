@@ -41,7 +41,7 @@ INSERT INTO organization(name) VALUES
 ('Etna');
 
 INSERT INTO user(email, password, firstname, lastname, phone, organization_id) VALUES
-('administrator@dummy.qovoltis.com', 'password', 'Johnny', '+33612345678', 'Hopkins', 1),
+('administrator@dummy.qovoltis.com', 'password', 'Johnny', 'Hopkins', '+33612345678', 1),
 ('ellen.willis@dummy.qovoltis.com', 'password', 'Ellen', 'Willis', '+33612345678', 1),
 ('alan.fleming@dummy.qovoltis.com', 'password', 'Alan', 'Fleming', '+33622345678',  1),
 ('larry.baker@dummy.qovoltis.com', 'password', 'Larry', 'Baker', '+33632345678', 1),
