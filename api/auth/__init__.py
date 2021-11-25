@@ -109,12 +109,12 @@ def __rbac_user_loader():
         {"http_status_code": 403, "message": "You don't have the rights to access this resource."}
 
     auth_method, auth_data = RequestAuthAnalyzer.get_auth_info(request)
-    print('rbac check', auth_method, auth_data)
+    # print('rbac check', auth_method, auth_data)
     if auth_method == RequestAuthAnalyzer.AUTH_NONE:
         return User.create_anonymous()
     elif auth_method == RequestAuthAnalyzer.AUTH_BASIC:
         auth = basic_auth.get_auth()
-        print(auth)
+        # print(auth)
         if not __basic_auth_verify_password(auth.username, auth.password):
             __FAIL_RESPONSES["INVALID_RIGHTS"] = __FAIL_RESPONSES["INVALID_BASIC_AUTH"]
     elif auth_method == RequestAuthAnalyzer.AUTH_BEARER:

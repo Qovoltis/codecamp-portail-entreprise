@@ -1,0 +1,2581 @@
+{
+	"info": {
+		"_postman_id": "74451f74-4dc6-40ad-94ae-b14457d163b3",
+		"name": "CodeCamp portail entreprise Qovoltis",
+		"description": "Welcome to the documentation of **Qovoltis** portail entreprise test API.\n\nThis API provides a set of endpoint for user/charge point management within an organization and charge point access management with the concept of whitelist (which are essentially Access Control Lists).\n\nThe more important points to get started are below !\n\n**Authentication : users, organizations and roles**\n\nOnly registered **users** can access ths API. Json Web Token are used for controlling authentication.\n\nFor all endpoints except *user/login* a valid JWT must be given as Bearer token. *user/login* is the endpoint that returns the token and it is accessed with basic authentication, providing email as login/password.\n\nUsers belong to **organizations** : an user can't access any data from another organization thant the one he's attached with.\n\nUsers have **roles. employee** and/or **administrator**. Employees can only access to their informations and charge points they have access on, while administrators can access and manage data of the whole organization.\n\n**HTTP Responses**\n\nThis API indents to be as standard as possible. HTTP response codes usually indicate if things went well or wrong :\n\n*   200 : all went well\n*   400 : wrong request (invalid data provided)\n*   401 : JWT wrong or expired\n*   403 : you have not the right to access this resource\n*   404 : the famous not found\n*   5xx : api error\n    \n\nTwo types of JSON responses can be returned :\n\n*   the standard JSON response with data, message and timestamp fields.\n*   the list response particularly adapted for use by JS list libraries with total, an integer, and rows an array of objects.\n    \n\n**Postman collection tips**\n\n4 environments (CodeCamp admin Qovoltis,...) are defined to facilitate API discovery. One administrator and one employee from each default organization. The current one can be easily selected with the list on top/right of postman window.\n\nAlso when you login it automatically set the token (see user/login test script) for automatic reuse by all endpoints. You're welcome !",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "administrator",
+			"item": [
+				{
+					"name": "get-charge-point-statistics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/administrator/get-charge-point-statistics",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"administrator",
+								"get-charge-point-statistics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-charge-point-statistics",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/get-charge-point-statistics",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"get-charge-point-statistics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "410"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 20:24:40 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"cp_count\": 3,\n            \"status_code\": \"INSTALLATION\",\n            \"status_label\": \"En installation\"\n        },\n        {\n            \"cp_count\": 9,\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\"\n        },\n        {\n            \"cp_count\": 6,\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\"\n        }\n    ],\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T20:24:40.284684\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get-employee-info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/administrator/get-employee-info/ellen.willis@dummy.qovoltis.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"administrator",
+								"get-employee-info",
+								"ellen.willis@dummy.qovoltis.com"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-employee-info",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/get-employee-info/ellen.willis@dummy.qovoltis.com",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"get-employee-info",
+										"ellen.willis@dummy.qovoltis.com"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "318"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:52:59 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"ellen.willis@dummy.qovoltis.com\",\n        \"info\": {\n            \"firstname\": \"Ellen\",\n            \"lastname\": \"Willis\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\"\n        },\n        \"roles\": [\n            \"employee\"\n        ]\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-24T16:52:59.922548\"\n}"
+						}
+					]
+				},
+				{
+					"name": "list-employee-allowed-charge-points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/administrator/list-employee-allowed-charge-points/ellen.willis@dummy.qovoltis.com?limit=2&offset=0&sort=reference&order=asc&filter=%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"administrator",
+								"list-employee-allowed-charge-points",
+								"ellen.willis@dummy.qovoltis.com"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "reference",
+									"description": "field to apply sort on. Should be in [reference, address, zip_code, city]. Optional default reference"
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"description": "sense of sorting asc|desc. Optional default asc"
+								},
+								{
+									"key": "filter",
+									"value": "%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [paid_by_organization, address, zip_code, city, status_code]. Optional default null"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-employee-allowed-charge-points",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/list-employee-allowed-charge-points/ellen.willis@dummy.qovoltis.com?limit=2&offset=0&sort=reference&order=asc&filter=%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"list-employee-allowed-charge-points",
+										"ellen.willis@dummy.qovoltis.com"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "reference",
+											"description": "field to apply sort on. Should be in [reference, address, zip_code, city]. Optional default reference"
+										},
+										{
+											"key": "order",
+											"value": "asc",
+											"description": "sense of sorting asc|desc. Optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [paid_by_organization, address, zip_code, city, status_code]. Optional default null"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "821"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:55:11 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"access\": {\n                \"created_at\": \"2021-11-24\",\n                \"expires_at\": \"2021-12-15\",\n                \"paid_by_organization\": true\n            },\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-01\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"access\": {\n                \"created_at\": \"2021-11-24\",\n                \"expires_at\": \"2021-12-15\",\n                \"paid_by_organization\": true\n            },\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-02\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        }\n    ],\n    \"total\": 4\n}"
+						},
+						{
+							"name": "list-employee-allowed-charge-points failed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/list-employee-allowed-charge-points/ellen.willis@dumy.qovoltis.com?limit=2&offset=0&sort=reference&order=asc&filter=%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"list-employee-allowed-charge-points",
+										"ellen.willis@dumy.qovoltis.com"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "reference",
+											"description": "field to apply sort on. Should be in [reference, address, zip_code, city]. Optional default reference"
+										},
+										{
+											"key": "order",
+											"value": "asc",
+											"description": "sense of sorting asc|desc. Optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [paid_by_organization, address, zip_code, city, status_code]. Optional default null"
+										}
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "134"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:55:50 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Unknown user with id ellen.willis@dumy.qovoltis.com\",\n    \"timestamp\": \"2021-11-24T16:55:50.763861\"\n}"
+						}
+					]
+				},
+				{
+					"name": "list-organization-employees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/administrator/list-organization-employees?limit=10&offset=0&sort=email&order=asc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"administrator",
+								"list-organization-employees"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "email",
+									"description": "field to apply sort on. Should be in [email, firstname, lastname]. Optional default email"
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"description": "sense of sorting asc|desc. Optional default asc"
+								},
+								{
+									"key": "filter",
+									"value": "%7B\"firstname\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-organization-employees",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/list-organization-employees?limit=10&offset=0&sort=email&order=asc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"list-organization-employees"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "email",
+											"description": "field to apply sort on. Should be in [email, firstname, lastname]. Optional default email"
+										},
+										{
+											"key": "order",
+											"value": "asc",
+											"description": "sense of sorting asc|desc. Optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"email\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1712"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 19:46:20 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"email\": \"administrator@dummy.qovoltis.com\",\n            \"firstname\": \"Johnny\",\n            \"lastname\": \"+33612345678\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"Hopkins\",\n            \"roles\": [\n                \"employee\",\n                \"administrator\"\n            ]\n        },\n        {\n            \"email\": \"alan.fleming@dummy.qovoltis.com\",\n            \"firstname\": \"Alan\",\n            \"lastname\": \"Fleming\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33622345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"carrie.holahan@dummy.qovoltis.com\",\n            \"firstname\": \"Carrie\",\n            \"lastname\": \"Holahan\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"ellen.willis@dummy.qovoltis.com\",\n            \"firstname\": \"Ellen\",\n            \"lastname\": \"Willis\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"june.roderiquez@dummy.qovoltis.com\",\n            \"firstname\": \"June\",\n            \"lastname\": \"Roderiquez\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33652345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"larry.baker@dummy.qovoltis.com\",\n            \"firstname\": \"Larry\",\n            \"lastname\": \"Baker\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33632345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"samantha.hicks@dummy.qovoltis.com\",\n            \"firstname\": \"Samantha\",\n            \"lastname\": \"Hicks\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        }\n    ],\n    \"total\": 7\n}"
+						}
+					]
+				},
+				{
+					"name": "list-whitelists",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/administrator/list-whitelists?limit=10&offset=0&sort=label&order=asc&filter=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"administrator",
+								"list-whitelists"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "label",
+									"description": "field to apply sort on. Should be in [label, created_at, expires_at]. Optional default created_at"
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"description": "sense of sorting asc|desc. Optional default desc"
+								},
+								{
+									"key": "filter",
+									"value": "",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [label]. Optional default null"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-organization-employees",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/administrator/list-organization-employees?limit=10&offset=0&sort=email&order=asc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"administrator",
+										"list-organization-employees"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "email",
+											"description": "field to apply sort on. Should be in [email, firstname, lastname]. Optional default email"
+										},
+										{
+											"key": "order",
+											"value": "asc",
+											"description": "sense of sorting asc|desc. Optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"email\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1712"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 19:46:20 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"email\": \"administrator@dummy.qovoltis.com\",\n            \"firstname\": \"Johnny\",\n            \"lastname\": \"+33612345678\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"Hopkins\",\n            \"roles\": [\n                \"employee\",\n                \"administrator\"\n            ]\n        },\n        {\n            \"email\": \"alan.fleming@dummy.qovoltis.com\",\n            \"firstname\": \"Alan\",\n            \"lastname\": \"Fleming\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33622345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"carrie.holahan@dummy.qovoltis.com\",\n            \"firstname\": \"Carrie\",\n            \"lastname\": \"Holahan\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"ellen.willis@dummy.qovoltis.com\",\n            \"firstname\": \"Ellen\",\n            \"lastname\": \"Willis\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"june.roderiquez@dummy.qovoltis.com\",\n            \"firstname\": \"June\",\n            \"lastname\": \"Roderiquez\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33652345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"larry.baker@dummy.qovoltis.com\",\n            \"firstname\": \"Larry\",\n            \"lastname\": \"Baker\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33632345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"samantha.hicks@dummy.qovoltis.com\",\n            \"firstname\": \"Samantha\",\n            \"lastname\": \"Hicks\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        }\n    ],\n    \"total\": 7\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder include endpoints only available to **administrators** and aimed for general management and consultation.\n\nAdministrators have access to their organization data:\n\n*   organization employees\n*   organization charge points\n*   whitelists\n    \n\nPrecise whitelist management is done with endpoints of the **whitelist** folder."
+		},
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "list-allowed-charge-points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/employee/list-allowed-charge-points?limit=2&offset=0&sort=reference&order=asc&filter=%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"employee",
+								"list-allowed-charge-points"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "reference",
+									"description": "field to apply sort on. Should be in [reference, address, zip_code, city]. Optional default reference"
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"description": "sense of sorting asc|desc. Optional default asc"
+								},
+								{
+									"key": "filter",
+									"value": "%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [paid_by_organization, address, zip_code, city, status_code]. Optional default null"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-allowed-charge-points",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/employee/list-allowed-charge-points?limit=2&offset=1&sort=reference&order=asc&filter=%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"employee",
+										"list-allowed-charge-points"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2",
+											"description": "maximum number of rows to return"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "pagination offset"
+										},
+										{
+											"key": "sort",
+											"value": "reference",
+											"description": "field to apply sort on. Should be in [reference, address, zip_code, city]"
+										},
+										{
+											"key": "order",
+											"value": "asc",
+											"description": "sense of sorting asc|desc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"city\"%3A\"Montr\"%2C\"zip_code\"%3A\"92120\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [paid_by_organization, address, zip_code, city, status_code]"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "822"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 18:34:58 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"access\": {\n                \"created_at\": \"2021-11-23\",\n                \"expires_at\": \"2021-12-10\",\n                \"paid_by_organization\": true\n            },\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-01\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"access\": {\n                \"created_at\": \"2021-11-22\",\n                \"expires_at\": \"2021-12-03\",\n                \"paid_by_organization\": false\n            },\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-02\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        }\n    ],\n    \"total\": 4\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder includes endpoints only available to **employees.**\n\nFor now it's only the list of charge points this employee has access to."
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get-info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/get-info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"get-info"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-info",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/get-info",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"get-info"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "345"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 19:53:11 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"administrator@dummy.qovoltis.com\",\n        \"info\": {\n            \"firstname\": \"Johnny\",\n            \"lastname\": \"Hopkins\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\"\n        },\n        \"roles\": [\n            \"employee\",\n            \"administrator\"\n        ]\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T19:53:11.923992\"\n}"
+						},
+						{
+							"name": "get-info token expired",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/get-info",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"get-info"
+									]
+								}
+							},
+							"status": "UNAUTHORIZED",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 22:02:15 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Token expired, please login again.\",\n    \"timestamp\": \"2021-11-23T22:02:15.091394\"\n}"
+						}
+					]
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Check Status', () => {",
+									"    if(pm.response.code === 200) {",
+									"        let jsonData = JSON.parse(responseBody);",
+									"        console.log(`User ${pm.environment.get(\"email\")} token set to ${jsonData.data.token}`);",
+									"        pm.environment.set(\"token\", jsonData.data.token);",
+									"    }",
+									"    else{",
+									"       console.warn('Invalid authentication');",
+									"       pm.environment.set(\"token\", null); ",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{email}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "295"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 19:46:46 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mzc2OTY4MDYsImV4cCI6MTYzNzcwMDQwNiwic3ViIjoxLCJyZWYiOiJhZG1pbmlzdHJhdG9yQGR1bW15LnFvdm9sdGlzLmNvbSJ9.23ct3-9C-pcuj1uprI2hSUHKve65K0icpx7owSv23jM\"\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T19:46:46.459995\"\n}"
+						},
+						{
+							"name": "failed login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "UNAUTHORIZED",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "111"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 20:56:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Wrong login and/or password.\",\n    \"timestamp\": \"2021-11-23T20:56:26.754832\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update-info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\": \"Johnny\",\n    \"lastname\": \"Hopkins\",\n    \"phone\": \"+33612345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/update-info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"update-info"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-info",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/get-info",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"get-info"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "345"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 19:13:28 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"administrator@dummy.qovoltis.com\",\n        \"info\": {\n            \"firstname\": \"Johnny\",\n            \"lastname\": \"+33612345678\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"Hopkins\"\n        },\n        \"roles\": [\n            \"employee\",\n            \"administrator\"\n        ]\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T19:13:28.818139\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"old_password\": \"password\",\n    \"new_password\": \"aBetterPassword1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/update-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"update-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-password wrong old",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"wrongPassword\",\n    \"new_password\": \"aBetterPassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/update-password",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"update-password"
+									]
+								}
+							},
+							"status": "BAD REQUEST",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 25 Nov 2021 12:44:46 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Entered current password is wrong.\",\n    \"timestamp\": \"2021-11-25T12:44:46.162789\"\n}"
+						},
+						{
+							"name": "update-password too short",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"password\",\n    \"new_password\": \"short\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/update-password",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"update-password"
+									]
+								}
+							},
+							"status": "BAD REQUEST",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "128"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 25 Nov 2021 12:45:58 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"New password must have at least 6 characters.\",\n    \"timestamp\": \"2021-11-25T12:45:58.557820\"\n}"
+						},
+						{
+							"name": "update-password success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"password\",\n    \"new_password\": \"aBetterPassword1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/update-password",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"update-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 25 Nov 2021 12:46:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Password succesfully updated.\",\n    \"timestamp\": \"2021-11-25T12:46:26.017468\"\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder group general endpoints that can be used by all users, whether they are employees or administrators.\n\nThese include the login endpoint, and endpoints for retrieving personal data and updating personal data and password."
+		},
+		{
+			"name": "whitelist",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"label\": \"whitelist 3\",\n    \"paid_by_organization\": false,\n    \"expires_at\": \"2021-12-31\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/whitelist/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"label\": \"whitelist 3\",\n    \"paid_by_organization\": false,\n    \"expires_at\": \"2021-12-31\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "282"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 22:04:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"cp_count\": 0,\n        \"created_at\": \"2021-11-23\",\n        \"expires_at\": \"2021-12-31\",\n        \"id\": 4,\n        \"label\": \"whitelist 3\",\n        \"organization\": \"Qovoltis\",\n        \"paid_by_organization\": false\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T22:04:10.225478\"\n}"
+						},
+						{
+							"name": "create conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"label\": \"whitelist 2\",\n    \"paid_by_organization\": false,\n    \"expires_at\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"create"
+									]
+								}
+							},
+							"status": "CONFLICT",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 22:03:16 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"This organization already has another whitelist named 'whitelist 2'\",\n    \"timestamp\": \"2021-11-23T22:03:16.330748\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/whitelist/delete/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "failed delete-whitelist",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/delete/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "110"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 22:19:33 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Unknown whitelist with id 1\",\n    \"timestamp\": \"2021-11-23T22:19:33.752501\"\n}"
+						},
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/delete/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"delete",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 22:21:42 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"message\": \"Whitelist 'whitelist test' successfully deleted\",\n    \"timestamp\": \"2021-11-23T22:21:42.925101\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get-info/<id>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/whitelist/get-info/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"get-info",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-info/<id>",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/whitelist/get-info/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"get-info",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "281"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 21:17:25 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"cp_count\": 4,\n        \"created_at\": \"2021-11-22\",\n        \"expires_at\": null,\n        \"id\": 1,\n        \"label\": \"Premiere whitelist\",\n        \"organization\": \"Qovoltis\",\n        \"paid_by_organization\": false\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T21:17:25.553892\"\n}"
+						}
+					]
+				},
+				{
+					"name": "list-charge-points/<id>/<in>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/whitelist/list-charge-points/1/in?limit=10&offset=1&sort=created_at&order=desc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"list-charge-points",
+								"1",
+								"in"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "field to apply sort on. Should be in [reference, status_code, address, zip_code, city]. Optional default reference"
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"description": "optional default asc"
+								},
+								{
+									"key": "filter",
+									"value": "%7B\"reference\"%3A\"04\"%7D",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [reference, address, zip_code, city, status_code]. Optional default null",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-charge-points/<id>/in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/whitelist/list-charge-points/1/in?limit=10&offset=1&sort=created_at&order=desc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"list-charge-points",
+										"1",
+										"in"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "field to apply sort on. Should be in [reference, status_code, address, zip_code, city]. Optional default reference"
+										},
+										{
+											"key": "order",
+											"value": "desc",
+											"description": "optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"reference\"%3A\"04\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [reference, address, zip_code, city, status_code]. Optional default null",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "798"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 14:54:52 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-03\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-02\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-01\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        }\n    ],\n    \"total\": 4\n}"
+						},
+						{
+							"name": "list-charge-points/<id>/out",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/whitelist/list-charge-points/1/out?limit=10&offset=1&sort=created_at&order=desc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"list-charge-points",
+										"1",
+										"out"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "field to apply sort on. Should be in [reference, status_code, address, zip_code, city]. Optional default reference"
+										},
+										{
+											"key": "order",
+											"value": "desc",
+											"description": "optional default asc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"reference\"%3A\"04\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [reference, address, zip_code, city, status_code]. Optional default null",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2635"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 14:53:29 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"address\": \"121 avenue Verdier\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0002-03\",\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"121 avenue Verdier\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0002-02\",\n            \"status_code\": \"INSTALLATION\",\n            \"status_label\": \"En installation\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"121 avenue Verdier\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0002-01\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-10\",\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-09\",\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-08\",\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-07\",\n            \"status_code\": \"STUDY\",\n            \"status_label\": \"En étude\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-06\",\n            \"status_code\": \"INSTALLATION\",\n            \"status_label\": \"En installation\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"2A rue Danton\",\n            \"city\": \"Montrouge\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*92120-0001-05\",\n            \"status_code\": \"INSTALLATION\",\n            \"status_label\": \"En installation\",\n            \"zip_code\": \"92120\"\n        },\n        {\n            \"address\": \"44 boulevard du président Wilson\",\n            \"city\": \"Strasbourg\",\n            \"organization\": \"Qovoltis\",\n            \"reference\": \"FR*QOV*67000-0001-02\",\n            \"status_code\": \"PRODUCTION\",\n            \"status_label\": \"En service\",\n            \"zip_code\": \"67000\"\n        }\n    ],\n    \"total\": 14\n}"
+						}
+					]
+				},
+				{
+					"name": "list-users/<id>/<in>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/whitelist/list-users/1/out?limit=10&offset=0&sort=created_at&order=desc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"list-users",
+								"1",
+								"out"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "maximum number of rows to return. Optional default 10"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "pagination offset. Optional default 0"
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "field to apply sort on. Should be in [email, firstname, lastname, created_at, expires_at]. Optional default created_at"
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"description": "optional default desc"
+								},
+								{
+									"key": "filter",
+									"value": "%7B\"firstname\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+									"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-users/<id>/in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/whitelist/list-users/1/in?offset=0&sort=created_at&order=desc&limit=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"list-users",
+										"1",
+										"in"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "field to apply sort on. Should be in [email, firstname, lastname, created_at, expires_at]. Optional default created_at"
+										},
+										{
+											"key": "order",
+											"value": "desc",
+											"description": "optional default desc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"firstname\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "396"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 12:09:28 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"access\": {\n                \"created_at\": \"2021-11-22\",\n                \"expires_at\": \"2021-12-03\"\n            },\n            \"email\": \"administrator@dummy.qovoltis.com\",\n            \"firstname\": \"Johnny\",\n            \"lastname\": \"Hopkins\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\",\n            \"roles\": [\n                \"employee\",\n                \"administrator\"\n            ]\n        }\n    ],\n    \"total\": 1\n}"
+						},
+						{
+							"name": "list-users/<id>/out",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/whitelist/list-users/1/out?limit=10&offset=0&sort=created_at&order=desc",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"list-users",
+										"1",
+										"out"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "maximum number of rows to return. Optional default 10"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "pagination offset. Optional default 0"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "field to apply sort on. Should be in [email, firstname, lastname, created_at, expires_at]. Optional default created_at"
+										},
+										{
+											"key": "order",
+											"value": "desc",
+											"description": "optional default desc"
+										},
+										{
+											"key": "filter",
+											"value": "%7B\"firstname\"%3A\"joh\"%2C\"lastname\"%3A\"hopkin\"%7D",
+											"description": "a url encoded json dictionary of key/value to filter. Available keys are [email, firstname, lastname]. Optional default null",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1449"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 15:13:34 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"email\": \"ellen.willis@dummy.qovoltis.com\",\n            \"firstname\": \"Ellen\",\n            \"lastname\": \"Willis\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33612345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"alan.fleming@dummy.qovoltis.com\",\n            \"firstname\": \"Alan\",\n            \"lastname\": \"Fleming\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33622345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"larry.baker@dummy.qovoltis.com\",\n            \"firstname\": \"Larry\",\n            \"lastname\": \"Baker\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33632345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"samantha.hicks@dummy.qovoltis.com\",\n            \"firstname\": \"Samantha\",\n            \"lastname\": \"Hicks\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"carrie.holahan@dummy.qovoltis.com\",\n            \"firstname\": \"Carrie\",\n            \"lastname\": \"Holahan\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33642345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        },\n        {\n            \"email\": \"june.roderiquez@dummy.qovoltis.com\",\n            \"firstname\": \"June\",\n            \"lastname\": \"Roderiquez\",\n            \"organization\": \"Qovoltis\",\n            \"phone\": \"+33652345678\",\n            \"roles\": [\n                \"employee\"\n            ]\n        }\n    ],\n    \"total\": 6\n}"
+						}
+					]
+				},
+				{
+					"name": "update-charge-points/<id>/<in>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"references\": [\"FR*QOV*92120-0002-03\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/whitelist/update-charge-points/1/out",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"update-charge-points",
+								"1",
+								"out"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-charge-points/<id>/in added",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"references\": [\"FR*QOV*92120-0002-03\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-charge-points/1/in",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-charge-points",
+										"1",
+										"in"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "174"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:29:47 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"FR*QOV*92120-0002-03\": \"ADDED\"\n    },\n    \"message\": \"1 charge points successfully added into the whitelist.\",\n    \"timestamp\": \"2021-11-24T16:29:47.928470\"\n}"
+						},
+						{
+							"name": "update-charge-points/<id>/out removed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"references\": [\"FR*QOV*92120-0002-03\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-charge-points/1/out",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-charge-points",
+										"1",
+										"out"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "178"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:30:18 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"FR*QOV*92120-0002-03\": \"REMOVED\"\n    },\n    \"message\": \"1 charge points successfully removed from the whitelist.\",\n    \"timestamp\": \"2021-11-24T16:30:18.987206\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update-info/<id>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"label\": \"whitelist tesst\",\n    \"paid_by_organization\": true,\n    \"expires_at\": \"2021-12-15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/whitelist/update-info/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"update-info",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-info/<id>",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"label\": \"premiere whitelist\",\n    \"paid_by_organization\": false,\n    \"expires_at\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-info/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-info",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "280"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Nov 2021 21:47:15 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"cp_count\": 4,\n        \"created_at\": \"2021-11-22\",\n        \"expires_at\": null,\n        \"id\": 1,\n        \"label\": \"premiere whitelist\",\n        \"organization\": \"Qovoltis\",\n        \"paid_by_organization\": true\n    },\n    \"message\": null,\n    \"timestamp\": \"2021-11-23T21:47:15.658582\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update-users/<id>/<in>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"expires_at\": \"2021-12-15\",\n    \"user_emails\": [\"ellen.willis@dummy.qovoltis.com\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/whitelist/update-users/1/in",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"whitelist",
+								"update-users",
+								"1",
+								"in"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-users/<id>/in added",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expires_at\": \"2021-12-15\",\n    \"user_emails\": [\"ellen.willis@dummy.qovoltis.com\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-users/1/in",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-users",
+										"1",
+										"in"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:18:59 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"ellen.willis@dummy.qovoltis.com\": \"ADDED\"\n    },\n    \"message\": \"1 users successfully added/updated into the whitelist.\",\n    \"timestamp\": \"2021-11-24T16:18:59.046577\"\n}"
+						},
+						{
+							"name": "update-users/<id>/in updated",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expires_at\": \"2021-12-15\",\n    \"user_emails\": [\"ellen.willis@dummy.qovoltis.com\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-users/1/in",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-users",
+										"1",
+										"in"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "187"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:15:15 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"ellen.willis@dummy.qovoltis.com\": \"UPDATED\"\n    },\n    \"message\": \"1 users successfully added/updated into the whitelist.\",\n    \"timestamp\": \"2021-11-24T16:15:15.710514\"\n}"
+						},
+						{
+							"name": "update-users/<id>/out removed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_emails\": [\"ellen.willis@dummy.qovoltis.com\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/whitelist/update-users/1/out",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"whitelist",
+										"update-users",
+										"1",
+										"out"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/1.0.1 Python/3.8.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 24 Nov 2021 16:16:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"ellen.willis@dummy.qovoltis.com\": \"REMOVED\"\n    },\n    \"message\": \"1 users successfully removed from the whitelist.\",\n    \"timestamp\": \"2021-11-24T16:16:36.294733\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Whitelists are access control list which :\n\n*   on one side are linked to charge points\n*   on the other linked to users\n    \n\nA whitelist gives its participating users access to its charge points.\n\nHowever this management can be precised by :\n\n*   a whitelist has an *expires_at* date on which it loses effect.\n*   a whitelist has a boolean field *paid_by_organization* describing if the user only has access to charge points but pays the cost, or if organization itself also pays the cost.\n*   Users can be attached to whitelist with an *expires_at* date which indicates they are only linked to the whitelist until a given date.\n    \n\nPlease note also that :\n\n*   charge point can be linked to several whitelists\n*   users can be linked to several whitelist\n*   charge point can't be linked to whitelists of other organizations\n*   users can't be linked to whitelists of other organizations"
+		}
+	]
+}

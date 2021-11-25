@@ -65,3 +65,27 @@ def update_info():
 
     user_info = helper_get_user_info(m_user, ['info'])
     return standard_json_response(http_status_code=200, data=user_info)
+
+
+@user_api.route('/update-password', methods=['POST'])
+@rbac.allow(['employee', 'administrator'], ['POST'], endpoint='user.update_password')
+@token_auth.login_required
+def update_password():
+    """update user password, a check is done on current password too"""
+    m_user: User = g.current_user
+    req_data: Dict = request.get_json() or request.json or {}
+    req_keys = req_data.keys()
+
+    if "old_password" not in req_keys or not req_data["old_password"]:
+        return standard_json_response(http_status_code=400, message=f"Missing key or wrong value 'old_password'")
+    if "new_password" not in req_keys or not req_data["new_password"]:
+        return standard_json_response(http_status_code=400, message=f"Missing key or wrong value 'new_password'")
+    if req_data["old_password"] != m_user.password:
+        return standard_json_response(http_status_code=400, message=f"Entered current password is wrong.")
+    if len(req_data["new_password"]) < 6:
+        return standard_json_response(http_status_code=400, message=f"New password must have at least 6 characters.")
+
+    m_user.password = req_data["new_password"]
+    db.session.commit()
+
+    return standard_json_response(http_status_code=200, message="Password succesfully updated.")
