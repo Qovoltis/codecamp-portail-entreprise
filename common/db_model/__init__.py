@@ -5,6 +5,8 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
+
+from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_rbac import RBAC
 
@@ -14,6 +16,8 @@ db = SQLAlchemy(session_options={"autoflush": False, "autocommit": False, "expir
 rbac = RBAC()
 
 # logging configuration
+# load .env files if any
+load_dotenv()
 log_filepath = f"{os.environ.get('LOG_FILEPATH','./logs')}/sqlalchemy.log"
 log_handler = RotatingFileHandler(
     log_filepath,

@@ -11,7 +11,7 @@ Sqlite3 database.
 **Requirements**
 
 To run the API you will need on your machine : 
-- python>=3.7 : https://www.python.org/downloads/
+- python>=3.7 : https://cww.python.org/downloads/
 - according to your python version you may need to install manually pip (https://pypi.org/project/pip/) and virtualenv (https://pypi.org/project/virtualenv/)
 - sqlite3 : https://www.sqlite.org/index.html
 
@@ -25,6 +25,8 @@ Ex /home/my-user/codeCampQovoltis
 Create in a place of your convenience a directory for storing the api data and logs. 
 It will be referred as {appDataDir}, ex /home/my-user/codeCampQovoltisData. Inside this directory
 create a subdirectory files and logs
+
+**UPDATE** to prevent bug with logs use {appDataDir}={appDir}
 
 **2)**
 In {appDir} copy the hidden file .env.dist to a new file .env and edit it to set the variables
