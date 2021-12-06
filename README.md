@@ -11,7 +11,7 @@ Sqlite3 database.
 **Requirements**
 
 To run the API you will need on your machine : 
-- python>=3.7 : https://cww.python.org/downloads/
+- python>=3.6 and < 3.10 (eventlet incompatibility known for python 3.10+) : https://cww.python.org/downloads/
 - according to your python version you may need to install manually pip (https://pypi.org/project/pip/) and virtualenv (https://pypi.org/project/virtualenv/)
 - sqlite3 : https://www.sqlite.org/index.html
 
@@ -98,7 +98,7 @@ You can also change default port (8000) and default host (127.0.0.1) by launchin
 **Test users**
 
 For using the api you need to login first. 
-Default db already comes with two organizations (QOvoltis and Etna) and a lot of test users : 
+Default db already comes with two organizations (Qovoltis and Etna) and a lot of test users : 
 
 Qovoltis users : 
 
@@ -123,10 +123,27 @@ byron.rodriguez@dummy.etna.com
 
 Users authenticate with their email and password *password* by default. 
 
-
 # Postman Documentation
 
+Postman generated Documentation is available at https://documenter.getpostman.com/view/11775247/UVJbFwYd
 
+Please note that the doc subdirectory contains complete API collection and environments.
+You just have to install Postman (https://www.postman.com/downloads/) to import these elements and test the various endpoints.
+
+
+
+# Testing the API@localhost
+
+Once launched you can test the API with web Javascript frontend using the test_api.html test webpage.
+
+Serve it with a simple python http server by typing :
+
+*cd {appDir}*
+
+*python3 -m http.server 8001 --bind 127.0.0.1*
+
+then browse http://127.0.0.1:8001/test_api.html to see if API calls are successful.
+You can also use js code as a snippet to see how connect your front to the API.
 
 # Contact
 

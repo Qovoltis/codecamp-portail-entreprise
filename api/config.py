@@ -1,10 +1,16 @@
 import os
+from dotenv import load_dotenv
+
+# load .env files if any
+load_dotenv()
 
 
 class ApiConfig(object):
     FLASK_ENV = os.environ.get('FLASK_ENV', 'development')
     DEBUG = bool(os.environ.get('DEBUG', True))
     TESTING = bool(os.environ.get('TESTING', True))
+    ALLOW_ORIGIN = os.environ.get('ALLOW_ORIGIN', '*')
+    CORS_SUPPORTS_CREDENTIALS = True
     RBAC_USE_WHITE = True
     USER_TOKEN_VALIDITY_SPAN = int(os.environ.get('USER_TOKEN_VALIDITY_SPAN', 3600))
     LOG_FILEPATH = os.environ.get('LOG_FILEPATH', './logs/')

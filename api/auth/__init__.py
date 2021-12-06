@@ -40,7 +40,6 @@ def __basic_auth_verify_password(email, password) -> bool:
     :param password:
     :return bool:
     """
-    # since rbac is called before if user is already set we just return it
     if g.get('current_user', None):
         return True
 
@@ -104,7 +103,6 @@ def __token_auth_verify_token(token: str) -> bool:
 def __rbac_user_loader():
     """rbac also needs a function to retrieve its user and check its roles
     """
-
     __FAIL_RESPONSES["INVALID_RIGHTS"] = \
         {"http_status_code": 403, "message": "You don't have the rights to access this resource."}
 

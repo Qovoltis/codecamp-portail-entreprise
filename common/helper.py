@@ -1,9 +1,15 @@
+import os
 import re
 from datetime import datetime
 from typing import Dict, Any
 
 from dateutil import parser
 from flask import jsonify, Response
+from dotenv import load_dotenv
+
+# load .env files if any
+load_dotenv()
+_ALLOW_ORIGIN = os.environ.get("ALLOW_ORIGIN", '*')
 
 
 def get_error_stacktrace(limit: int = None, full_stacktrace: bool = False, verify_exception: bool = True) -> str:
@@ -62,7 +68,7 @@ def standard_json_response(http_status_code: int = 200,
         'timestamp': timestamp.isoformat(),
         'data': data
     })
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Origin'] = _ALLOW_ORIGIN
     response.status_code = http_status_code
     return response
 

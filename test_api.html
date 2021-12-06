@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--launch this page with the command python3 -m http.server 8001 --bind 127.0.0.1
+    then browse to http://127.0.0.1:8001/test_api.html to get this page
+-->
+<html>
+
+<head>
+  <title>Test API</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <div id="header"></div>
+
+  <div>
+      <form id="testForm" action="">
+      <div class="form-group">
+        <label for="email">API URL</label>
+        <input type="text" class="form-control" id="apiUrl" name="apiUrl" placeholder="Enter API url" required>
+      </div>
+      <div class="form-group">
+        <label for="password">email</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input type="text" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+      </div>
+      <button id="loginSubmit" type="submit" class="btn btnPrimary mx-auto">Test API</button>
+    </form>
+  </div>
+  <div id ="notification"></div>
+
+
+  <script>
+  (function() {
+    let apiUrl = '';
+
+    let form = document.getElementById("testForm");
+    let notifDiv = document.getElementById("notification");
+
+    document.getElementById("apiUrl").value = 'http://localhost:8000';
+    document.getElementById("email").value = 'administrator@dummy.qovoltis.com';
+    document.getElementById("password").value = 'password';
+
+
+    function requestUserInfo(apiUrl, token){
+
+       let authString = "Bearer " + token;
+
+       var myHeaders = new Headers();
+       myHeaders.append("AUTHORIZATION", authString);
+       let requestOptions = {
+          method: 'GET',
+          headers: myHeaders
+       };
+
+       fetch(`${apiUrl}/api/user/get-info`, requestOptions)
+            .then(function (response) {
+              if (response.status == 200){
+                return response.json();
+              }
+              else{
+                throw 'error while requesting endpoint (http !=200)'
+              }
+            })
+            .catch(function (error) {
+                console.warn(`fail : ` + error.message);
+                notifDiv.innerHTML = `KO !!! : Either login endpoint couldn't be called, a CORS problem occured or credentials are wrong.`;
+            })
+            .then(function(json_response){
+                console.log(json_response.data);
+                const info = json_response.data.info;
+                notifDiv.innerHTML = `Test OK : a successful call to login endpoint was made. Welcome ${info.firstname} ${info.lastname} !`;
+            });
+    }
+
+    function requestLogin(apiUrl, email, password){
+
+       let authString = email + ':' + password;
+       let encodedAuthString = "Basic " + btoa(authString);
+
+       var myHeaders = new Headers();
+       myHeaders.append("AUTHORIZATION", encodedAuthString);
+       let requestOptions = {
+          method: 'POST',
+          headers: myHeaders
+       };
+
+       fetch(`${apiUrl}/api/user/login`, requestOptions)
+            .then(function (response) {
+              if (response.status == 200){
+                console.log("OK");
+                notifDiv.innerHTML = `Test OK : a successful call to login endpoint was made.`;
+                const json_response = response.json();
+                return new Promise((resolve, reject) => {
+                    json_response.then(
+                        function (response) {
+                            console.log(response.data);
+                            requestUserInfo(apiUrl, response.data.token);
+                        }
+                )});
+              }
+              else{
+                console.warn("fail : http status ${response.status}");
+                notifDiv.innerHTML = `KO !!! : Either login endpoint couldn't be called, a CORS problem occured or credentials are wrong.`;
+              }
+            })
+            .catch(function (error) {
+                console.warn(`fail : ` + error.message);
+                notifDiv.innerHTML = `KO !!! : Either login endpoint couldn't be called, a CORS problem occured or credentials are wrong.`;
+            });
+    }
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        let apiUrl = document.getElementById("apiUrl").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        requestLogin(apiUrl, email, password);
+
+    });
+
+  })();
+  </script>
+
+</body>
+
+</html>
